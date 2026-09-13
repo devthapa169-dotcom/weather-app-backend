@@ -1,10 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');
-
-
-const admin = require('firebase-admin');
 
 let serviceAccount;
 if (process.env.FIREBASE_KEY) {
@@ -12,10 +8,6 @@ if (process.env.FIREBASE_KEY) {
 } else {
   serviceAccount = require('./serviceAccountKey.json');
 }
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -49,6 +41,7 @@ app.post('/log-visit', async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log('Server started on port 5000');
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
